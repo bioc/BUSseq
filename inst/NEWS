@@ -1,3 +1,8 @@
 Change in version 0.99.0 (2020-05-04)
 + Submitted to Bioconductor
 
+Change in version 0.99.1 (2020-05-07)
++ Revised the warnings by R CMD check, including adding parentheses in src and R dependency in DESCRIPTION
+
+Change in version 0.99.2 (2020-05-08)
++ Correctly pushing by Git
