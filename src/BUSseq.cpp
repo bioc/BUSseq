@@ -18,7 +18,7 @@
 
 #endif
 
-#ifdef linux
+#ifdef __linux__
 
 #include <iostream>
 #include <iomanip>
@@ -103,7 +103,7 @@ int rand_NB(double _r, double _mu, omprng _rng){
         res ++;
         u = _rng.runif();
         p = p * u;
-        while((p < 1) & nu > 0){
+        while((p < 1) & (nu > 0)){
             if(nu > STEP){
                 p = p * exp(STEP);
                 nu = nu - STEP;

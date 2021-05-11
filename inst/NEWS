@@ -6,3 +6,10 @@ Change in version 0.99.1 (2020-05-07)
 
 Change in version 0.99.2 (2020-05-08)
 + Correctly pushing by Git
+
+Change in version 0.99.3 (2020-05-08)
++ Set LazyData as TRUE for building vignette
+
+Change in version 0.99.4 (2020-05-12)
++ Correct R version dependency
++ Solve the warnings by missing parenthesees
