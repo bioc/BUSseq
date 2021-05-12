@@ -13,3 +13,8 @@ Change in version 0.99.3 (2020-05-08)
 Change in version 0.99.4 (2020-05-12)
 + Correct R version dependency
 + Solve the warnings by missing parenthesees
+
+Change in version 0.99.5 (2020-05-12)
++ Adding the macro for Mac in the source code
++ Shortening the vignettes
++ Adding Watched Tags BUSseq to my profile

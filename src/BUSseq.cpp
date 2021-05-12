@@ -39,6 +39,26 @@
 
 #endif
 
+#ifdef __APPLE__
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <math.h> // pow, sqrt, lgamma
+#include <cmath> //
+#include "omprng.h"
+# include <chrono> // time
+#include <stdlib.h>
+#include <string>
+#include <stdio.h>
+#include <sys/stat.h>  //mkdir
+#include <sys/types.h>
+#include <algorithm>    // sort
+#include <vector>  
+#include <R.h>
+#include <Rinternals.h>
+
+#endif
 
 using namespace std;
 
@@ -540,7 +560,7 @@ double postprob_DE_thr_fun(double *_PPI, double _fdr_threshold, int _G, int _K){
 	kappa = 1 - vec_PPI[0];
 	fdr = fdrDEindicator(_PPI, kappa, _G, _K);
 
-    while((fdr <= _fdr_threshold) & (kappa <= postprob_DE_thr) & i < (unsigned)vec_PPI.size()){
+    while((fdr <= _fdr_threshold) & (kappa <= postprob_DE_thr) & (i < (unsigned)vec_PPI.size())){
         i++;
 		kappa = 1 - vec_PPI[i];
         fdr = fdrDEindicator(_PPI, kappa, _G, _K);
