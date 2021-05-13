@@ -16,9 +16,7 @@
 #include <R.h>
 #include <Rinternals.h>
 
-#endif
-
-#ifdef __linux__
+#elif __linux__
 
 #include <iostream>
 #include <iomanip>
@@ -37,9 +35,7 @@
 #include <R.h>
 #include <Rinternals.h>
 
-#endif
-
-#ifdef __APPLE__
+#elif __APPLE__
 
 #include <iostream>
 #include <iomanip>
@@ -627,16 +623,16 @@ void BUSseq_MCMC(int *Y_vec, int *Dim, int *seed, int *nc,
 	string output_dir(dir_output[0]);
 	output_dir = output_dir + "/";
 
-#ifdef linux
+#ifdef __linux__
 int check = mkdir(output_dir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-#endif
-
-#ifdef _WIN32
+#elif _WIN32
 if (0 != access(output_dir.c_str(), 0))
     {
         // if this folder not exist, create a new one.
         mkdir(output_dir.c_str()); 
     }
+#elif  __APPLE__
+int check = mkdir(output_dir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 #endif
 	
 	string out_file;

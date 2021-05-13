@@ -60,6 +60,9 @@ BUSseq_MCMC <- function(ObservedData, n.celltypes,
     dir.create(working_dir)
   }
   sampling_dir <- paste0(working_dir,"/MCMC_sampling_K",K)
+  if(dir.exists(sampling_dir)){
+    unlink(sampling_dir,recursive = TRUE)
+  }
   dir.create(sampling_dir, showWarnings=FALSE)
   
   #################
