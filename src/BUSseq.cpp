@@ -1794,6 +1794,7 @@ for (int iter = 0; iter < iter_num; iter++) {
 	for (int g = 0; g < G; g++) {
 		for (int b = 0; b < B; b++) {
 			phi_post[iter][q] = phi[g][b];
+			q++;
 		}
 	}
 	
