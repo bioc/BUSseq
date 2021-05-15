@@ -30,3 +30,6 @@ Change in version 0.99.8 (2020-05-15)
 
 Change in version 0.99.9 (2020-05-16)
 + Modifying the warnings when building on MacOS
+
+Change in version 0.99.10 (2020-05-16)
++ Continuing to debug for MacOS

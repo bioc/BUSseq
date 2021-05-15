@@ -3070,7 +3070,7 @@ for (int b = 0; b < B; b++) {
 		for (int i = 0; i < nb[b]; i++) {
 			for (int k = 0; k < K; k++) {
 				lpy[k] = log(pi_est[b * K + k]);
-				
+
 				int read, x_max;
 				double logmubikg, pbgk, logp, log1mp, lr0_temp, sum_lr0;
 
@@ -3157,8 +3157,8 @@ for (int b = 0; b < B; b++) {
 						log1mp = log(1 - pbgk);
 					}
 
-					lpy += lgamma(phi_est[g * B + b] + read) - lgamma(read + 1) - lgamma(phi_est[g * B + b]);
-					lpy += read * logp + phi_est[g * B + b] * log1mp;
+					lpy[k] += lgamma(phi_est[g * B + b] + read) - lgamma(read + 1) - lgamma(phi_est[g * B + b]);
+					lpy[k] += read * logp + phi_est[g * B + b] * log1mp;
 				}
 
 			}// end of k 
