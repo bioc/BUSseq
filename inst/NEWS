@@ -39,3 +39,6 @@ Change in version 0.99.11 (2020-05-15)
 
 Change in version 0.99.12 (2020-05-15)
 + Revising the random number generator for MacOS
+
+Change in version 0.99.13 (2020-05-15)
++ Modifying the running example 
