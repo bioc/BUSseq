@@ -110,7 +110,7 @@ int rand_cate(double* _prop, int _K) {
 		res++;
 	}
 
-	delete[] vec
+	delete[] vec;
 	return res;
 }
 
@@ -1004,15 +1004,25 @@ void BUSseq_MCMC(int *Y_vec, int *Dim, int *seed, int *nc,
 	output_dir = output_dir + "/";
 
 #ifdef __linux__
+
 int check = mkdir(output_dir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+if(check == 0){
+	Rprintf("The directory of saving posterior sampling is created.");
+}
+
 #elif _WIN32
 if (0 != access(output_dir.c_str(), 0))
     {
         // if this folder not exist, create a new one.
         mkdir(output_dir.c_str()); 
+		Rprintf("The directory of saving posterior sampling is created.");
+
     }
 #elif  __APPLE__
 int check = mkdir(output_dir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+if(check == 0){
+	Rprintf("The directory of saving posterior sampling is created.");
+}
 #endif
 	
 	string out_file;
@@ -1039,7 +1049,7 @@ int check = mkdir(output_dir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 	double sigma_d = hyper[11];
 	// for phi Gamma prior
 	double *phi_prior = &(hyper[12]);
-	auto start_overall = chrono::system_clock::now();
+	// auto start_overall = chrono::system_clock::now();
 	////////////////////////////////
 	// 1. Initialize parameters //
 	////////////////////////////////
@@ -1357,8 +1367,9 @@ int check = mkdir(output_dir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 		if (iter_noupdate > iter_num) {
 			iter_noupdate = iter_noupdate - iter_num;
 		}
+
 		// cout << "Starting " << t * iter_out + 1 << "-" << t * iter_out + iter_num << " iterations for the " << t + 1 << "-th output." << endl;
-		auto start_MCMC = chrono::system_clock::now();
+		// auto start_MCMC = chrono::system_clock::now();
 
 #ifdef __APPLE__
 
@@ -2401,8 +2412,8 @@ for (int iter = 0; iter < iter_num; iter++) {
 #endif
 
 
-		auto end_MCMC = chrono::system_clock::now();
-		chrono::duration<double> elapsed_seconds_MCMC = end_MCMC - start_MCMC;
+		// auto end_MCMC = chrono::system_clock::now();
+		//chrono::duration<double> elapsed_seconds_MCMC = end_MCMC - start_MCMC;
 		// cout << "elapsed time of " << iter_num << " iterations of MCMC sampling for the " << t + 1 << "-th output is: " << elapsed_seconds_MCMC.count() << "s" << endl;
 		///////////////////////////////////
 		// output the posterior sampling //
@@ -2546,16 +2557,9 @@ for (int iter = 0; iter < iter_num; iter++) {
     Rprintf("] Finish %.2fk/%.2fk iterations.\n\n", tot_iter/1000.0, iter_max/1000.0);
     // fflush(stdout);
 	
-	auto end_overall = chrono::system_clock::now();
-	chrono::duration<double> elapsed_seconds_overall = end_overall - start_overall;
+	//auto end_overall = chrono::system_clock::now();
+	//chrono::duration<double> elapsed_seconds_overall = end_overall - start_overall;
 	// cout << "elapsed time of the overall algorithm is: " << elapsed_seconds_overall.count() << "s" << endl;
-
-
-#ifdef __APPLE__
-
-	PutRNGstate();
-
-#endif	
 
 	//free the memory
 	delete[] count_w;
@@ -2701,26 +2705,33 @@ void BUSseq_inference(int *Y_vec, int *Dim,
 	string output_dir(dir_output[0]);
 	output_dir = output_dir + "/";
 
+/*
 #ifdef _WIN32
 
 if (0 != access(output_dir.c_str(), 0))
     {
         // if this folder not exist, create a new one.
         mkdir(output_dir.c_str()); 
+		Rprintf("The directory of saving posterior inference is created.");
+
     }
 
 #else
 
 int check = mkdir(output_dir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+if(check == 0){
+	Rprintf("The directory of saving posterior inference is created.");
+}
 
 #endif
+*/
 
 	string out_file;
 
 	// file variable to output the posterior sampling
 	ofstream post_File;
 
-	auto start_overall = chrono::system_clock::now();
+	//auto start_overall = chrono::system_clock::now();
 	////////////////////////////
 	// 1. Posterior inference //
 	////////////////////////////
@@ -3026,12 +3037,17 @@ int check = mkdir(output_dir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 
 	// Calculate likelihood and BIC
 
+#ifdef __APPLE__
+
+	set_seed(12345, 123456);
+
+#else
 
 	omprng Loglike_Rng;
 	Loglike_Rng.fixedSeed(12345);// for Monte carlo estimation of E(exp(gamma_0+gamma_1x)/(1+exp(gamma_0+gamma_1x)))
 	omp_set_num_threads(nc[0]);
 
-
+#endif
 
 	int cell_index;
 	double loglike_obs;
@@ -3041,7 +3057,7 @@ int check = mkdir(output_dir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 	// Set the number of cores for parallel
 	// Calculate BIC 
 
-	auto start_BIC = chrono::system_clock::now();
+	// auto start_BIC = chrono::system_clock::now();
 	loglike_obs = 0.0;
 	cell_index = 0;
 
@@ -3054,10 +3070,7 @@ for (int b = 0; b < B; b++) {
 		for (int i = 0; i < nb[b]; i++) {
 			for (int k = 0; k < K; k++) {
 				lpy[k] = log(pi_est[b * K + k]);
-			}
-			for (int k = 0; k < K; k++) {
-				// auto start_bik = chrono::system_clock::now();
-
+				
 				int read, x_max;
 				double logmubikg, pbgk, logp, log1mp, lr0_temp, sum_lr0;
 
@@ -3079,9 +3092,9 @@ for (int b = 0; b < B; b++) {
 					}
 
 					if (read > 0) {
-						lpy += -log(1 + exp(gamma_est[b * 2] + gamma_est[b * 2 + 1] * read));
-						lpy += lgamma(phi_est[g * B + b] + read) - lgamma(read + 1) - lgamma(phi_est[g * B + b]);
-						lpy += read * logp + phi_est[g * B + b] * log1mp;
+						lpy[k] += -log(1 + exp(gamma_est[b * 2] + gamma_est[b * 2 + 1] * read));
+						lpy[k] += lgamma(phi_est[g * B + b] + read) - lgamma(read + 1) - lgamma(phi_est[g * B + b]);
+						lpy[k] += read * logp + phi_est[g * B + b] * log1mp;
 					}
 					else {
 						x_max = (int)3 * exp(logmubikg);
@@ -3099,7 +3112,7 @@ for (int b = 0; b < B; b++) {
 								sum_lr0 = sum_lr0 + log(1 + exp(lr0_temp - sum_lr0));
 							}
 						}
-						lpy += sum_lr0;
+						lpy[k] += sum_lr0;
 						//Rprintf("y %d %d %d = 0 and sum_lr0 is %f if the cell belongs to %d-th subtype.\n",b, i ,j ,sum_lr0, k);
 					}
 				}
@@ -3297,14 +3310,8 @@ for (int b = 0; b < B; b++) {
 	}
 	BIC[0] = -2.0 * loglike_obs + log(G * N) * ((B + G) * K + 2 * NumBatchDrop + G * (B * 2 - 1) + N - B);
 	// all parameters of interest contain pi_{bk}, gamma_{b0(1)}, alpha_g, beta_{gk}, nu_{bg}, delta_{bi}, phi_{bg} 
-	auto end_BIC = chrono::system_clock::now();
-	chrono::duration<double> elapsed_seconds_BIC = end_BIC - start_BIC;
-
-#ifdef __APPLE__
-
-	PutRNGstate();
-
-#endif	
+	// auto end_BIC = chrono::system_clock::now();
+	// chrono::duration<double> elapsed_seconds_BIC = end_BIC - start_BIC;
 
 	delete[] sum_alpha_sq;
 	delete[] sum_beta_sq;

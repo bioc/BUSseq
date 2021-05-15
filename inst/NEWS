@@ -21,3 +21,12 @@ Change in version 0.99.5 (2020-05-12)
 
 Change in version 0.99.6 (2020-05-13)
 + Downsizing the example dataset to avoid reaching the time limit of check
+
+Change in version 0.99.7 (2020-05-14)
++ Updating th source code for MacOS
+
+Change in version 0.99.8 (2020-05-15)
++ Correcting the usage of OS macro
+
+Change in version 0.99.9 (2020-05-16)
++ Modifying the warnings when building on MacOS
