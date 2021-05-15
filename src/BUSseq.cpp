@@ -983,7 +983,7 @@ void BUSseq_MCMC(int *Y_vec, int *Dim, int *seed, int *nc,
 
 #ifdef __APPLE__
 
-	set_seed(seed[0], 123456);
+	set_seed((unsigned)seed[0], 1u);
 
 #else
 
@@ -3039,7 +3039,7 @@ if(check == 0){
 
 #ifdef __APPLE__
 
-	set_seed(12345, 123456);
+	set_seed(12345, 1u);
 
 #else
 
@@ -3137,8 +3137,8 @@ for (int b = 0; b < B; b++) {
 			for (int k = 0; k < K; k++) {
 				// auto start_bik = chrono::system_clock::now();
 
-				int read, x_max;
-				double logmubikg, pbgk, logp, log1mp, lr0_temp, sum_lr0;
+				int read;
+				double logmubikg, pbgk, logp, log1mp;
 
 				for (int g = 0; g < G; g++) {
 					read = Y[g][cell_index];
@@ -3259,8 +3259,8 @@ for (int b = 0; b < B; b++) {
 					// auto start_bik = chrono::system_clock::now();
 # pragma omp parallel
 					{
-						int read, x_max;
-						double logmubikg, pbgk, logp, log1mp, lr0_temp, sum_lr0, lpy_thread;
+						int read;
+						double logmubikg, pbgk, logp, log1mp, lpy_thread;
 						lpy_thread = 0.0;
 # pragma omp for
 						for (int g = 0; g < G; g++) {

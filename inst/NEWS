@@ -28,8 +28,11 @@ Change in version 0.99.7 (2020-05-14)
 Change in version 0.99.8 (2020-05-15)
 + Correcting the usage of OS macro
 
-Change in version 0.99.9 (2020-05-16)
+Change in version 0.99.9 (2020-05-15)
 + Modifying the warnings when building on MacOS
 
-Change in version 0.99.10 (2020-05-16)
+Change in version 0.99.10 (2020-05-15)
 + Continuing to debug for MacOS
+
+Change in version 0.99.11 (2020-05-15)
++ Debugging for MacOS
