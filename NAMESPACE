@@ -16,7 +16,7 @@ export(overdispersions)
 export(raw_read_counts)
 import("SingleCellExperiment")
 import("gplots")
-importFrom("SummarizedExperiment", "assay","assayNames")
+importFrom("SummarizedExperiment", "assay","assay<-","assayNames")
 importFrom("S4Vectors", "DataFrame")
 importFrom("methods", "is")
 importFrom("stats", "pnbinom", "qnbinom", "rbinom", "rmultinom", 
