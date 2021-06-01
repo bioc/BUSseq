@@ -51,3 +51,6 @@ Change in version 0.99.15 (2020-06-01)
 
 Change in version 0.99.16 (2020-06-01)
 + Avoiding the overlapping when loading dependencies
+
+Change in version 0.99.17 (2020-06-01)
++ Correcting the import of dependencies
